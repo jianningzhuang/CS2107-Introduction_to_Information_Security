@@ -1,0 +1,8 @@
+the file header seems to be corrupted as there is a message saying it begins with 0x89 0x42
+
+using a hex editor bless, changinn from 89 42 to 89 50 (.PN...)
+
+becomes a .png image with the flag in the picture
+
+
+CS2107{8Rok3n_F1l3_H34D3r_d4mDi5X2c}

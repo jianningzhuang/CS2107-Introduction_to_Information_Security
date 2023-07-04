@@ -1,0 +1,12 @@
+We are given the source code XOR.py. A random 32 byte key is generated using os.urandom(32). However, the way the key is extended to match the length of the plaintext can be exploited. 
+
+extend_key(key, size) multiplies the original random key by size//len(key) and then matches the exact length of the plaintext by adding the slice of key[:size%len(key)].
+
+As the flag is appended to our input and then encrypted, we can determine the length of the flag by connecting to the service and passing in nothing. We find the length of the flag is 27 bytes.
+
+Since we know (x XOR 0) = x, we can pad the flag with 32 bytes of 0 to return the entire key before the encrypted flag.
+
+Using this ciphertext, we get the first 27 bytes of the key with ciphertext[:54] and XOR with the encrypted flag ciphertext[64:] to get the original 27 byte flag since (C XOR K) = (P XOR K XOR K) = P.
+
+Flag found is CS2107{my_x0r_607_cr4ck3d}.
+

@@ -1,0 +1,12 @@
+Q1
+
+1. Availability
+2. CLick Fraud
+3. Typo squatting
+4. Integer Overflow
+5. CSRF
+6. Covert chanel
+7. Fuzzing
+8. zero day vulnerability
+9. role absed access control
+10. Kerckhoff's principle

@@ -1,0 +1,219 @@
+C:\ffmpeg\ffmpeg-20200831-4a11a6f-win64-static\bin/ffmpeg -f gdigrab -r 1 -probesize 20M -threads 1 -i desktop -vcodec libx264 -b:v 128k -s hd720 C:/CS2107/A0214561M-CS2107Final.mp4
+
+C:/ffmpeg/ffmpeg-20200831-4a11a6f-win64-static\bin/ffplay C:/CS2107/A0214561M-CS2107Final.mp4
+
+Jianning-Zhuang-A0214561M
+
+all possible keys = 2^64
+clock cycles to test all possible keys = 2^9 * 2^64 = 2^73 clock cycles
+4GHz processor = 2^2 * 2^30 = 2^32 clock cycles per second
+time taken = 2^73/2^32 = 2^41 seconds = 2^16 years = 2^6 K years = 64K years
+
+
+cluster of 1024 servers, each quad core 4GHz = 2^10 * 2^2 * 2^32 = 2^44 clock cycles per second
+time taken = 2^73/2^44 = 2^29 = 2^4 years = 16 years 
+
+64 bits = 8 bytes
+2^32 entries of 64 bit long lookup table = 2^3 bytes* 2^32 = 2^5 Gbytes = 32 GB
+
+
+C XOR K = M
+C' XOR K = M'
+
+C' XOR C XOR K XOR K = M XOR M'
+C'= M XOR M' XOR C
+
+known plaintext codebook attack
+store 1 input block = 16 bits = 2 bytes
+store 1 output block = 16 bits = 2 bytes
+2^16 inputs and corresponding output = 4 bytes * 2^16 = 0.25MB
+
+
+store 1 input block = 48 bits = 6 bytes
+store 1 output block = 48 bits = 6 bytes
+2^48 inputs and corresponding output = 12 bytes * 2^48 = 3PB
+
+
+The encryption process cannot run in parallel.
+This is since the encryption at round i to produce the ciphertext block yi does
+take as its input the ciphertext block yi􀀀1 that is generated only in the previous
+round i-1.
+
+The decryption process can run in parallel.
+This is because the decryption at round i to recover the plaintext block xi de-
+pends only on the ciphertext blocks yi and yi􀀀1, which are both readily available
+from the sent ciphertext.
+
+
+Meet in the Middle Attack
+
+C = Ek2(Ek1(P))
+
+Given a pair of plaintext P and Ciphertext C
+
+1) encrypt plaintext P with all possible values of k1 (2^56 keys) and store in set U
+2) decrypt Ciphertext C with all possible values of k2 (2^56 keys) and store in set V
+3) Find common element x in U and V such that key used to encrypt to get x is k1 and key used to decrypt to get x is k2
+
+2^56 encryption and 2^56 decryption = 2^57 cryptographic operations
+also requires 2^57 space to store U and V
+
+If multiple commmon element x found, need to test all key pairs with other P and C until 1 unique K1 and K2
+
+
+Let M = 1000, T = 100000
+Since M > 1.17 * T^0.5, the probability there exists 2 students with the same number of hair glands is greater than 0.5
+actual probability = 1 - e^(-M^2/2T) =~ 0.99326 
+
+stream cipher uses 64 bit IV => T = 2^64
+M > 1.17*T^0.5 such that probability 2 ciphertext have same IV greater than 0.5
+M ~= 2^32
+
+
+SHA-1 is deterministic => same digest with same seed
+
+
+
+
+srand(time(NULL)) gives current calendar time
+srand deterministic => same seed gives same number generation sequence
+can determine/brute force given rough time
+OR int for seed is 16 or 32 bit brute force
+
+with known seed, any key or IV generation with hash function is insecure
+
+
+
+confidentiality and integrity
+confidentiality => encrypt using AES CBC with k1 as secret key
+authenticity => integrity => HMAC with k2 as key
+
+compromise confidentiality => since hash is deterministic, same MAC => same plaintext block
+			   => if no IV for CBC, same plaintext encrypt into same ciphertext
+
+deterministic cipher is susceptible to cryptanalysis under chosen plaintext attack scenario
+
+compromise integrity => 
+
+CBC decrypt => altered cipehrtext only affect corresponding and following plaintext block, other blocks remain intact
+
+
+
+key length = k
+key space size of Vignere Cipher = 27^k (each character in key has 27 choices)
+
+k known, ciphertext only
+All letters in ciphertext with same i(mod k) apart gets shifted by same letter in keyword which turns it into a monoalphabetic cipher
+Frequency analysis can be performed on each group to determine the letter/key
+We can then get the complete plaintext by combining the k sub sequences
+
+Basically, all characters of the ciphertext that get shifted by the same character index of the key can be determined using the frequency analysis technique.
+More precisely, this method can be described using the following pseudo code.
+Suppose the ciphertext is denoted as c, with indices range from 0 to length(c)-1.
+For each i in [0..k-1]:
+Initialize the ciphertext sub-sequence ci as an empty string;
+For each i in [0..length(c)-1]:
+Append the character of c at index i, i.e. c[i], into the sub-sequence c i mod k ;
+For each i in [0..k-1]:
+Perform a frequency analysis on the ciphertext sub-sequence ci ;
+Return the complete plaintext by combining the k plaintext sub-sequences that correspond to the k ciphertext sub-sequences;
+
+ 
+all possible input blocks = 2^24
+clock cycles to encrypt all possible input blocks = 2^9 * 2^24 = 2^33 clock cycles
+4GHz processor = 2^2 * 2^30 = 2^32 clock cycles per second
+time taken = 2^33/2^32 = 2 seconds 
+
+
+store 1 output block = 24 bits = 3 bytes
+2^24 output blocks = 3 bytes * 2^24 = 48MB
+
+store 1 output block = 48 bits = 6 bytes
+2^48 output blocks = 6 bytes * 2^48 = 1.5PB
+
+
+T = 2^224
+M > 1.17T^0.5 = 2^113
+
+This is the standard birthday attack.
+We know that T = 2^88.
+To have a probability more than 0.5 that a collision occurs,
+we just need to find M that satisfies the inequaility condition: M > 1.17*T^0.5.
+We can just easily set M to: 2*2^(88/2) = 2^45.
+
+n = 224
+k = 2^10
+m = 2^214
+
+
+Let’s apply the birthday attack variant.
+Let n = 224, and k = 210.
+To simplify our calculation, we can assume the probability of 0.63 that the person will generate a digest matching 1 of the listed digests.
+For this probability, we just need m that satisfies: k · m = 2^n.
+Hence, m = 2^n / k = 2^224 / 2^10 = 2^214.
+That is, the person must approximately hash 2^214 different input messages.
+
+
+
+1.Certification Authority
+2.Block Cipher
+3.Typo Squatting
+4.One-time-pad
+5.Side-channel
+6.Kerckhoffs's Principle
+7.Initial Value (IV)
+8.Authenticated Encryption
+9.mode-of-operation
+10.Covert Channel
+
+
+XORing 3 keys of 56 bits each still returns a value that is 56 bits long, 
+key space size will still be 2^56, which is the same as using 1 key
+
+
+Meet in the Middle Attack
+
+C = Ek2(Ek1(P))
+
+Given a pair of plaintext P and Ciphertext C
+
+1) encrypt plaintext P with all possible values of k1 (2^56 keys) and store in set U
+2) decrypt Ciphertext C with all possible values of k2 (2^56 keys) and store in set V
+3) Find common element x in U and V such that key used to encrypt P to get x is k1 and key used to decrypt C to get x is k2
+
+2^56 encryption and 2^56 decryption = 2^57 cryptographic operations
+also requires 2^57 space to store U and V
+
+If multiple commmon element x found, need to test all key pairs with other P and C until 1 unique K1 and K2
+
+
+If Y0/IV is removed from ciphertext, unable to XOR with Dk(Y1) to get X1, all other plaintext blocks can still be decrypted
+
+Encryption process cannot run in parallel as generating Yk needs Yk-1 as input, which can only be generated in a previous round
+
+Decryption can run in parallel since Xk = Dk(Yk) XOR Yk-1. All input can be found from the ciphertext immediately
+
+
+number of password = 16M = 2^4 * 2^20 = 2^24
+clock cycles to compute digest of all password = 2^30 * 2^24 = 2^54 clock cycles
+4GHz processor = 2^2 * 2^30 = 2^32 clock cycles per second
+time taken = 2^54/2^32 = 2^22 seconds = 2^-3 year = 1.5 months 
+
+
+store 1 output block = 128 bits = 16 bytes
+2^24 output blocks = 16 bytes * 2^24 = 0.25GB
+
+
+
+T = 10000
+M = 150
+M > 1.17*T^0.5 => probability that 2 cars having same license plate > 1/2
+
+n = 64
+k = 2^20
+km = 2^n => m = 2^44 = 16T
+
+
+
+
+

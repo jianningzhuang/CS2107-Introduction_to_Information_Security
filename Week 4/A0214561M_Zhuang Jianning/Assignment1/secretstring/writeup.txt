@@ -1,0 +1,5 @@
+message at the end of assigment 1 pdf is in hexadecimal
+
+convert hexadecimal to ascii to get flag
+
+I used an online converter

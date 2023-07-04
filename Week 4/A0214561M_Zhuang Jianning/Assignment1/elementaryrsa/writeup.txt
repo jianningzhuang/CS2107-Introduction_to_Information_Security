@@ -1,0 +1,8 @@
+given n, e and c
+
+factorise n to prime numbers p and q using factordb.com
+
+calculate phi = (p-1)*(q-1)
+calculate d = inverse(e, phi) need import inverse from Crypto.Util.number
+calculate m = pow(c, d, n) by decrypting with private key (d, n)
+print long_to_bytes(m) need import long_to_bytes from Crypto.Util.number

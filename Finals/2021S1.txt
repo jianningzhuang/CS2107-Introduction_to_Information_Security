@@ -1,0 +1,167 @@
+Q1
+
+1.Availability
+2.Buffer Overflow
+3.Reference Monitor
+4.Mandatory Access Control
+5.SQL Injection
+6.IPSec
+7.Click Fraud
+8.CSRF
+9.Privilege Escalation
+10.Fuzzing
+
+Q2
+
+1.Stream Cipher
+2.2^12
+3.attacker cannot use precomputed lookup table
+4.Nslookup is for DNS not portscanning, nmap for port scanning
+5.malware can know IP address since in TCP/IP layer
+6.UID must be 0 for superuser
+7.replacing strcpy() with strncpy() is compile time, not run time
+8.chmod 4750 myprogram
+9.not owner, not in group, 0 => cannot execute
+10.in group, 5=> can execute and setUID => read UID = 4000, effective UID = 2000
+
+Q3
+
+a) When k = 2, x cannot map to odd values (mod 26) and there is a many to one mapping. 
+This also means the defined encryption function is not bijective.
+For example, Ek(0) = 0 mod 26 = 0 and Ek(13) = 26 mod 26 = 0 mod 26.
+For such values, there is ambiguity when decrypting back to x.
+Dk(Ek(x)) might not give back x which violates the correctness proprty.
+In other words, the requirement of Dk(Ek(x)) = x for all x ϵ {0, 1, 2, …, 25} does not hold.
+
+b) When k = 3, there is a one to one mapping between plaintext and ciphertext. 
+Each number {0, 1, ...25} gets encrypted uniquely to a number in the set.
+(In fact, the corresponding decryption function can be defined by multiplying the ciphertext with the multiplicative inverse of 3.)
+Given the above, the cipher’s correctness requirement is thus met, i.e. the requirement of Dk(Ek(x)) = x for all x ϵ {0, 1, 2, …, 25} holds.
+
+c) k = 3 works
+Decryption function is Dk(c) = c*inv(3) mod 26
+multiplicative inverse of 3 mod 26 is 9
+Dk(c) = (c*9) mod 26
+
+
+Q4
+
+#include <stdio.h>
+#include <string.h>
+
+void copy_input(char *input) {
+    unsigned char buffer[31];
+    unsigned char length = strlen(input);
+    if (length <= 30) {
+        strncpy(buffer, input,strlen(input));
+        printf("Your supplied argument is %s.\n", buffer);
+        printf("Its length is %d.\n", length);
+    }
+    else {
+        printf("Your supplied argument is longer than requested!\n");
+    }
+}
+
+int main(int argc, char *argv[])
+{
+    if (argc == 2){
+        copy_input(argv[1]);
+    }
+    else {
+        printf("Please supply one argument with at most 30 characters.\n");
+    }
+    return 0;
+}
+
+https://www.onlinegdb.com/online_c_compiler
+iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii
+
+a) length is an unsigned char (1 byte) which is 8 bit unsigned integer. Hence its value ranges from 0 to 255 since unsigned uses modulo arithmetic. 
+Values greater than 255 become modulo 256. For example, input of length 257 will have length = 1 and will be copied to buffer.
+
+If strcpy is used, input argument is not securely copied to buffer, there can be buffer overflow.
+The whole argument will be printed out
+length is modulo 256
+
+b) If strncpy with max 30 is used, only first 30 char will be copied securely
+Whole argument not printed out if > 30
+length is still modulo 256
+
+c) if strlen(input) used as strncpy max, whole argument securely copied even if greater than 30
+stack smashing detected?
+whole argument printed out
+length is still modulo 256
+
+declare a[5] should only be able to write from a[0] to a[4] to be safe and secure
+
+Q5
+
+a) XSS is prevented. the script can no longer access the cookies previously sent by the web server even if same origin
+
+You can ensure that cookies are sent securely and aren't accessed by unintended parties or scripts in one of two ways:
+1.with the Secure attribute
+A cookie with the Secure attribute is only sent to the server with an encrypted request over the HTTPS protocol. 
+It's never sent with unsecured HTTP (except on localhost), which means attackers man-in-the-middle can't access it easily. 
+Insecure sites (with http: in the URL) can't set cookies with the Secure attribute. 
+However, don't assume that Secure prevents all access to sensitive information in cookies. 
+For example, someone with access to the client's hard disk (or JavaScript if the HttpOnly attribute isn't set) can read and modify the information.
+
+2. with the HttpOnly attribute.
+A cookie with the HttpOnly attribute is inaccessible to the JavaScript Document.cookie API; it's only sent to the server. 
+For example, cookies that persist in server-side sessions don't need to be available to JavaScript and should have the HttpOnly attribute. 
+This precaution helps mitigate cross-site scripting (XSS) attacks.
+
+b) "<script><script>alert("bypassed")</script></script>
+
+c) UPDATE Employee SET address = '', phone = '' WHERE username = 'Mallory';
+
+let input of address be ', salary = 20000 WHERE username = 'Mallory';--
+
+final UPDATE will be 
+
+UPDATE Employee SET address = '', salary = 20000 WHERE username = 'Mallory';--', phone = '' WHERE username = 'Mallory';
+
+
+
+Q6
+
+a) Rule 2 of F2 after checking Rule 1 not violated (banned sites)
+   Rule 5 of F1 after checking Rule 4 not violated (banned sites)
+
+No rule for checking from banned sites source to internal since web service only replies request initiated by internal
+
+b) Rule 6 of F2 first blocks internal trying to access SSH server
+
+Source IP is Internal
+Dest IP is *
+Source Port is *
+Dest Port is SSH port 22
+does not fall under any rules => caught by 6
+
+c) F2 rule 4 allows outgoing ICMP OUT
+ F1 rule 7 allow outgoing ICMP OUT
+
+d) F2 rule 4 should change Source IP to only allow Internal
+F1 rule 7 should change Source IP to only allow Internal
+all other source IP that is not internal will be denied by rule 6 in F2 and rule 9 in F1 respectively
+
+
+Q7
+
+a) Open 2 sessions, A sends nA1 in first, nA2 in second, M switches and sends nA2 to B in first session and nA1 in second
+reply Ek(nA1) with reply from B from session 2
+reply Ek(nA2) with reply from B from session 1
+no repeated nonces
+
+A          M            B
+->A, nA1   -> M, nA2
+
+
+->A, nA2   -> M, nA1
+
+
+b) fix protocol by not allowing multiple sessions or interleaving between sessions
+
+
+
+

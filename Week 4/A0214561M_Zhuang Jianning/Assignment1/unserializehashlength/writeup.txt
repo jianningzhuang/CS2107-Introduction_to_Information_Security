@@ -1,0 +1,16 @@
+length extention attack
+
+./hash_extender -d O%3A4%3A%22User%22%3A2%3A%7Bs%3A15%3A%22%00User%00userlevel%22%3Bi%3A10%3Bs%3A14%3A%22%00User%00username%22%3Bs%3A8%3A%22John+Doe%22%3B%7D%3Cx%3EO%3A4%3A%22User%22%3A2%3A%7Bs%3A15%3A%22%00User%00userlevel%22%3Bi%3A33%3Bs%3A14%3A%22%00User%00username%22%3Bs%3A12%3A%22Peter+Parker%22%3B%7D%3Cx%3EO%3A4%3A%22User%22%3A2%3A%7Bs%3A15%3A%22%00User%00userlevel%22%3Bi%3A87%3Bs%3A14%3A%22%00User%00username%22%3Bs%3A11%3A%22Gabe+Newell%22%3B%7D --data-format=html -s 5816211e284ab224a1f6988f06f4643006ede4d913a49b352dd0d1dd1181c207 -a %3Cx%3EO%3A4%3A%22User%22%3A2%3A%7Bs%3A15%3A%22%00User%00userlevel%22%3Bi%3A2107%3Bs%3A14%3A%22%00User%00username%22%3Bs%3A15%3A%22Jianning+Zhuang%22%3B%7D --append-format=html -l 32 --out-data-format=html
+Type: sha256
+Secret length: 32
+New signature: 4646a312328e8e1f7fb664a85c8f7e3ee053663c2d14b8a3cd1300b7035625ae
+New string: O%3a4%3a%22User%22%3a2%3a%7bs%3a15%3a%22%00User%00userlevel%22%3bi%3a10%3bs%3a14%3a%22%00User%00username%22%3bs%3a8%3a%22John+Doe%22%3b%7d%3cx%3eO%3a4%3a%22User%22%3a2%3a%7bs%3a15%3a%22%00User%00userlevel%22%3bi%3a33%3bs%3a14%3a%22%00User%00username%22%3bs%3a12%3a%22Peter+Parker%22%3b%7d%3cx%3eO%3a4%3a%22User%22%3a2%3a%7bs%3a15%3a%22%00User%00userlevel%22%3bi%3a87%3bs%3a14%3a%22%00User%00username%22%3bs%3a11%3a%22Gabe+Newell%22%3b%7d%80%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%00%08%f8%3cx%3eO%3a4%3a%22User%22%3a2%3a%7bs%3a15%3a%22%00User%00userlevel%22%3bi%3a2107%3bs%3a14%3a%22%00User%00username%22%3bs%3a15%3a%22Jianning+Zhuang%22%3b%7d
+
+
+
+append string format
+
+level, name length, name
+
+
+https://blog.skullsecurity.org/2012/everything-you-need-to-know-about-hash-length-extension-attacks

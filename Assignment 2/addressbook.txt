@@ -1,0 +1,32 @@
+gdb-peda$ info address is_premium_user
+Symbol "is_premium_user" is static storage at address 0x4040ac.
+
+gdb-peda$ info address is_premium_user
+Symbol "is_premium_user" is static storage at address 0x4040ac.
+
+gdb-peda$ p &contacts[-1]
+$1 = (struct Contact *) 0x404098
+gdb-peda$ p &contacts
+$2 = (struct Contact (*)[20]) 0x4040c0 <contacts>
+
+
+each contact is 40 bytes
+we can cause integer overflow with delete many contacts cos it does not check if delete_num is negative
+
+32 bit integer => -2^31 to 2^31 - 1 2s complement
+
+num_contacts -= -2147483647 = 2147483647
+num_contacts -= -2147483648 (still valid) = -1
+
+contact[-1] at 404098 = 152
+
+40 byte contact struct
+
+change 0x4040ac to 1 = 172
+
+20th byte
+
+ADD
+
+JIANNING
+90045299

@@ -1,0 +1,15 @@
+
+going through the usual ways to deal with .png
+
+file
+
+hexdump
+
+strings
+
+exiftool => 4ys_t0_h1d3_RnPeRGfywQ}
+
+steganography (stegsolve) => CS2107{b4d_W
+
+
+CS2107{b4d_W4ys_t0_h1d3_RnPeRGfywQ}

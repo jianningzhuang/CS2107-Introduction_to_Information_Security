@@ -1,0 +1,17 @@
+similar to elementary RSA
+
+ns = [q*r, p*q, p*r]
+
+to get each prime, can multiply 2 of the numbers and divide by the third to get the square of each number
+
+e.g ns[0]*ns[1]//ns[2] = q^2*r*p//p*r = q^2
+
+then we can use factordb to find the roots
+
+the flag is encrypted 3 times, with each of the numbers in ns
+
+so we decrypt 3 times in reverse order => p*r, P*q, q*r
+
+we find the phi, d and intermediate ciphertext for each 3 to finally get flag
+
+code from elementary RSA reused

@@ -1,0 +1,11 @@
+notice that 3 hex characters (3X4=12 bits) map to 2 base64 characters (2x6 characters)
+
+e.g 0x000 => nn, 0x001 => nj
+
+generate all possible 3 hex character = 16x16x16 = 4098 possible combinations
+
+netcat to 4002 and use service 1) to find mapping
+
+create a dictionary to map output to input
+
+break the encoded flag into 2 characters and map using the dictionary to get flag
